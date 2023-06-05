@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet">
+    <title>Contact us</title>
+    <style>
+        #map {
+            width: 1000px; /* Adjust the width as per your requirements */
+            height: 600px;
+            margin: 20px auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .carousel-description {
+            text-align: center;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body class="full-height-grow">
+    <div class="container full-height-grow">
+        <header class="main-header">
+            <a href="index.html" class="brand-logo">
+                <img src="logo.svg" alt="Logo">
+                <div class="brand-logo-name">Discover Kaunas</div>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="api.html">Discover</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="carousel-description">
+            <p>This carousel showcases the best images that I've accumulated from different locations in Kaunas.</p>
+        </div>
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <img src="image1.jpg" alt="Image 1">
+                <img src="image2.jpg" alt="Image 2">
+                <img src="image3.jpg" alt="Image 3">
+                <img src="image4.jpg" alt="Image 4">
+                <img src="image5.jpg" alt="Image 5">
+                <img src="image6.jpg" alt="Image 6">
+                <img src="image7.jpg" alt="Image 7">
+            </div>
+            <a class="prev-btn">&#10094;</a>
+            <a class="next-btn">&#10095;</a>
+        </div>
+    </div>
+    <div class="container full-height-grow">
+        <div class="subtitle">The map of places where the pictures are taken.</div>
+        <div id="map"></div>
+        <p id="geolocation"></p>
+        <button type="button" onclick="getLocation()" class="btn">Get your geolocation</button>
+    </div>
+
+    <script src="main.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBr0ETTsEwBJFBrJ3i8JjoDodTFYqS6KxY&callback=initMap"></script>
+    <script>
+        function initMap() {
+            var locations = [
+                { lat: 54.8969, lng: 23.9213 },
+                { lat: 54.8989, lng: 23.8854 },
+                { lat: 54.8968, lng: 23.8861 },
+                { lat: 54.8945, lng: 23.9245 },
+                { lat: 54.900384, lng: 23.921227 },
+                { lat: 54.8916, lng: 23.8865 },
+                { lat: 54.899428, lng: 23.913551 }
+                // Add more locations as needed
+            ];
+
+            var map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 13,
+                center: locations[0] // Set the initial center of the map to the first location
+            });
+
+            // Create markers for each location
+            for (var i = 0; i < locations.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: locations[i],
+                    map: map
+                });
+            }
+        }
+
+
+        const x = document.getElementById("geolocation");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            x.innerHTML = `Latitude: ${position.coords.latitude}<br>Longitude: ${position.coords.longitude}`;
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    x.innerHTML = "User denied the request for Geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    x.innerHTML = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    x.innerHTML = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    x.innerHTML = "An unknown error occurred.";
+                    break;
+            }
+        }
+    </script>  
+</body>
+</html>

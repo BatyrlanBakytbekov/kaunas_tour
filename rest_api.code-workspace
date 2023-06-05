@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../Users/Admin/Downloads/rest_api"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "website"
+	}
+}
